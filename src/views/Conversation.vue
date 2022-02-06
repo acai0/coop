@@ -27,16 +27,12 @@
     </div> 
 </template>
 <script> 
-import Header from "../components/Header.vue";
 import PosterMessage from '../components/PosterMessage.vue';
 import Message from '../components/Message.vue';
-import Navigation from '../components/Navigation.vue';
 export default{
     components:{
-        Header,
         PosterMessage, 
         Message,
-        Navigation,
     },
 
     data(){

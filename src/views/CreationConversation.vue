@@ -30,7 +30,7 @@
                                     </div>
                                     </div>
                 </div>
-                                    </section>
+</section>
                 </div>
                                     </template>
 <script>
@@ -50,11 +50,11 @@
                 this.$api
                 .post("channels", this.conversation)
                 .then((response)=>{
-                    this.$router.push({name:'Conversations', params:{id:response.data.id}})
+                    this.$router.push({name:'conversation', params:{idConversation:response.data.id}})
                 })
                 .catch((error)=>{
                     alert(error.response.data.message);
-                })
+                });
             },
         },
     };
