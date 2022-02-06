@@ -1,5 +1,6 @@
 <template>
-<article class="media box" v-if="member">
+<transition name="fade">
+<article class="media box" v-if="member && afficher">
   <figure class="media-left">
     <p class="image is-64x64">
       <img :src="avatar(member)"/>
@@ -27,24 +28,27 @@
     class="level-item" v-if="message.member_id== $store.state.member.id">
           <span class="icon is-small"><i class="fas fa-heart"></i></span>
         </a>
+</div>
+    </nav>
     </nav>
   </div>
 </article>
+</transition>
 </template>
 <script>
 export default{
-  props: {
-  },
-  created () {
-  },
     props :["message"],
-    data:{
-afficher=false,
+    data(){
+      return{
+        afficher:true,
+    };
     },
     methods:{
         supprimer(){
-            if(confirm('Supprimer ce message?')){this.$api.delete(`channels/${message.channel_id}/posts/${this.message.id}`)
+            if(confirm('Supprimer ce message?')){
+              this.$api.delete(`channels/${this.message.channel_id}/posts/${this.message.id}`)
             .then((response)=>{
+              console.log(response);
                 this.afficher=false;
             })
             }
@@ -54,12 +58,26 @@ afficher=false,
 }
 </script>
 <style scoped lang="scss">
-article{
-    .level{
-        opacity: 0;
-        transition: opacity .5s ease;
+article {
+  .level {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  &:hover {
+    .level {
+      opacity: 1;
     }
+  }
 }
-
+</style>
+<style>
+.fade-enter-active,
+.fade-leave-article {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
 

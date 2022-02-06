@@ -1,6 +1,6 @@
 <template>
     <div> 
-        <Header />
+        <Navigation />
         <section class="section">
             <div class="box" v-if="conversation">
                 <p class="title is-4">{{conversation.topic}}<span class="tag"></span></p>
@@ -8,7 +8,11 @@
                 </div>
                 <poster-message :conversation="conversation"/>
                 <template v-for="message in messages">
+                    <div class"card-mb-2">
+                    <div class="card-content">
+                        <div class="content">{{message.message}}</div>
                     <message message="message" :key="message.id"/>
+                </template>
                     </section>
                     <!--
                     <section class="section">
@@ -25,29 +29,48 @@
 <script> 
 import Header from "../components/Header.vue";
 import PosterMessage from '../components/PosterMessage.vue';
+import Message from '../components/Message.vue';
+import Navigation from '../components/Navigation.vue';
 export default{
     components:{
         Header,
         PosterMessage, 
+        Message,
+        Navigation,
     },
+
     data(){
         return{
             conversation:false,
+            messages:[],
         };
     },
     mounted(){
-        let id= this.$route.params.idConversation;
+        this.chargerConversation();
        // alert(this.$route.params.idConversation);
-            this.$api.get(`channels/${id}`).then((response)=>{
-            this.conversation= response.data;
+            this.$bus.$on('charger-conversation', this.chargerConversation)
+            this.$bus.$on('charger-messages', this.chargerMessages)
             /*
             this.$api
             .get(`channels/${this.conversation.id}`)
             .then((response)=>{
                 this.messages = response.data;
             })
-            */
-        });
-    },
-};
+         */
+},
+chargerConversation(){
+    let id=this.$route.params.idConversation;
+    this.$api.get('channels/${id}').then((response)=>{
+        this.conversation=response.data;
+        this.chargerMessages();
+    });
+},
+chargerMessages(){
+    this.$api
+    .get(`channels/${this.conversation.id}/posts`)
+    .then((response)=>{
+
+    })
+}
+}
 </script>     

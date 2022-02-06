@@ -1,9 +1,12 @@
 <template>
-  <div id="app">
-    <div id="nav">
-     <p>Coop</p>
+  <div>
+    <router-view v-if="$store.state.ready"/>
+    <template v-else>
+      <div class="chargement-has-text-light">
+       <p> Chargement, veuillez patienter</p> 
+<button class="button-is-loading-is-dark"></button>
     </div>
-    <router-view/>
+    <template>
   </div>
 </template>
 <script>
@@ -11,9 +14,10 @@
 export default{
         name:'App',
             mounted(){
-                this.$api.get('ping').then()
+              this.$store.commit("setReady", false);
+                //this.$api.get('ping').then()
                 if(!this.$store.state.token){
-                    this.$router.push('connection');
+                    this.seConnecter;
                 } else{
                   this.$api
                   .get(`members/${this.$store.state.member.id}/signedin`)
