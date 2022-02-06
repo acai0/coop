@@ -7,10 +7,15 @@
 </template>
 
 <script>
+import Message from "../components/Message.vue";
 export default{
+    components:{
+        Message,
+    },
     data(){
         return{
             member:false,
+            allMessages:[],
     };
 },
 mounted(){
