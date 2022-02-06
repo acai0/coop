@@ -56,7 +56,7 @@ export default {
         password: this.password,
       };
       this.$api
-        .post("members/signin", donnees)
+        .post("members/signedin", donnees)
         .then((response) => {
           this.$store.commit("setToken", response.data.token);
           this.$store.commit("setMember", response.data.member);

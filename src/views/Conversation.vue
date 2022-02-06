@@ -8,13 +8,13 @@
                 </div>
                 <poster-message :conversation="conversation"/>
                 <template v-for="message in messages">
-                    <div class"card-mb-2">
+                    <div class"card mb-2">
                     <div class="card-content">
                         <div class="content">{{message.message}}</div>
                     <message message="message" :key="message.id"/>
                 </template>
                     </section>
-                    <!--
+            <!--
                     <section class="section">
                         
                    <template v-for="message in messages">
